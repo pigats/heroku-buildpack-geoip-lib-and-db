@@ -4,11 +4,6 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_FILE=$3
 
-# PROFILE_PATH="$BUILD_DIR/.profile.d/geoip.sh"
-set-env() {
-  echo "export $1=$2" >> $PROFILE_PATH  mk
-}
-
 GEOIP_VERSION="1.6.5"
 
 VENDORED_GEOIP="vendor/geoip/1.6.5"
@@ -37,6 +32,10 @@ else
 fi
 mkdir -p "$BUILD_DIR/$VENDORED_GEOIP/share/"
 cp $GEOLITECITY_FILE "$BUILD_DIR/$VENDORED_GEOIP/share/$GEOLITECITY_FILE"
+GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 
-# set-env GEOIP_PATH "$APP_GEOIP/share/"
-echo "       GeoIP City Database is available via env in \$GEOIP_PATH"
+# populate profile.d
+PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
+echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
