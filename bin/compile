@@ -32,7 +32,7 @@ echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
   tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
 
   cd libmaxminddb-1.1.1
-  ./configure --prefix="$APP_GEOIP" > /dev/null
+  ./configure --enable-shared --prefix="$APP_GEOIP" > /dev/null
   make > /dev/null
   make check > /dev/null
   make install
