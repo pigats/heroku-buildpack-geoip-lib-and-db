@@ -29,11 +29,11 @@ echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
   ./configure --prefix="$APP_GEOIP" > /dev/null
   make > /dev/null
   make check > /dev/null
-  sudo make install
-  sudo ldconfig
+   make install
+   ldconfig
 # fi
-
-ls
+echo "--- post build"
+# ls
 
 cd $CACHE_DIR/.geoip
 
