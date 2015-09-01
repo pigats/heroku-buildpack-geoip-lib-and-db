@@ -5,6 +5,7 @@ CACHE_DIR=$2
 ENV_FILE=$3
 
 GEOIP_VERSION="1.6.6"
+LIBMAXMIND_DIST_FILE="libmaxminddb-1.1.1.tar.gz"
 
 VENDORED_GEOIP="vendor/geoip/$GEOIP_VERSION"
 APP_GEOIP="/app/$VENDORED_GEOIP"
@@ -13,23 +14,25 @@ APP_GEOIP="/app/$VENDORED_GEOIP"
 
 GEOLITECITY_URL="http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz"
 GEOLITECITY_FILE="GeoLite2-City.mmdb"
-LIBMAXMIND_DIST_URL="https://github.com/maxmind/libmaxminddb/releases/download/1.1.1/libmaxminddb-1.1.1.tar.gz"
+LIBMAXMIND_DIST_URL="https://github.com/maxmind/libmaxminddb/releases/download/1.1.1/$LIBMAXMIND_DIST_FILE"
 GEOIP_DIST_DIR="GeoIP-$GEOIP_VERSION"
-
 
 mkdir -p $CACHE_DIR/.geoip
 cd $CACHE_DIR/.geoip
 
 echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
-curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
-tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
+# if [ ! -f LIBMAXMIND_DIST_FILE ]; then
+  curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
+  tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
 
-cd libmaxminddb-1.1.1
-./configure --prefix="$APP_GEOIP" > /dev/null
-make > /dev/null
-make check
-make install > /dev/null
-ldconfig
+  cd libmaxminddb-1.1.1
+  ./configure --prefix="$APP_GEOIP" > /dev/null
+  make > /dev/null
+  make check > /dev/null
+  sudo make install
+  sudo ldconfig
+# fi
+
 ls
 
 cd $CACHE_DIR/.geoip
