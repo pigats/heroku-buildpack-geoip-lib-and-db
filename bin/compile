@@ -79,7 +79,7 @@ if [ ! -f $BUNDLE_CONFIG ]; then
   echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/include --with-opt-lib=$APP_GEOIP/lib\"" >> $BUNDLE_CONFIG
 fi
 
-if  grep -quiet "BUNDLE_BUILD__MAXMIND_GEOIP2" cache/.geoip/build/.bundle/config ; then echo "1"; fi
+if grep -quiet "BUNDLE_BUILD__MAXMIND_GEOIP2" $BUNDLE_CONFIG ; then
   echo "BUNDLE_BUILD__MAXMIND_GEOIP2 already in .bundle/config"
 else
   echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/include --with-opt-lib=$APP_GEOIP/lib\"" >> $BUNDLE_CONFIG
