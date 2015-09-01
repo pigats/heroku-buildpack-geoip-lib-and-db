@@ -60,6 +60,9 @@ GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 LIBMAXMINDDB_PATH="$APP_GEOIP/libmaxminddb"
 echo "Adding build options to BUNDLE_CONFIG"
 mkdir -p $BUILD_DIR/.bundle
+echo "OLD .bundle/config"
+
+cat "$BUILD_DIR/.bundle/config"
 
 BUNDLE_CONFIG=$BUILD_DIR/.bundle/config
 if [ ! -f $BUNDLE_CONFIG ]; then
