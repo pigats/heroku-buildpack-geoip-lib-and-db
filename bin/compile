@@ -30,7 +30,7 @@ echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
   make
   make check
   make install
-  ldconfig
+  find $APP_GEOIP
 # fi
 echo "--- post build"
 # ls
