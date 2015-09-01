@@ -24,14 +24,18 @@ if [ ! -d "$CACHE_DIR/.geoip" ]; then
 fi
 
 mkdir -p $CACHE_DIR/.geoip
-
 cd $CACHE_DIR/.geoip
 
+echo "-----> Installing Maxmind GeoIP C Library $GEOIP_VERSION"
 curl -s -L -o geoip.tar.gz $GEOIP_DIST_URL
 tar -zxvf geoip.tar.gz > /dev/null
 cd $GEOIP_DIST_DIR
 ./configure --prefix="$APP_GEOIP" > /dev/null
-make install --prefix="$BUILD_DIR/$VENDORED_GEOIP" > /dev/null
+make > /dev/null
+make check
+make install > /dev/null
+
+cd $GEOIP_DIST_DIR
 
 if [ ! -f $GEOLITECITY_FILE ]; then
     echo "     Downloading  $GEOLITECITY_FILE"
