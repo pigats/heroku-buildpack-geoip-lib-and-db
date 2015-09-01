@@ -27,7 +27,7 @@ cd $CACHE_DIR/.geoip
 LIBMAXMIND_DIST_HEADER=$APP_GEOIP/include/maxminddb.h
 
 echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
-if [ ! -f $LIBMAXMIND_DIST_HEADER ]; then
+# if [ ! -f $LIBMAXMIND_DIST_HEADER ]; then
   curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
   tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
 
@@ -36,7 +36,9 @@ if [ ! -f $LIBMAXMIND_DIST_HEADER ]; then
   make > /dev/null
   make check > /dev/null
   make install
-fi
+  ldconfig
+  cat /etc/ld.so.conf.d/local.conf
+# fi
 
 cd $CACHE_DIR/.geoip
 
