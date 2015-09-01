@@ -21,13 +21,14 @@ GEOLITECITY_FILE="GeoLite2-City.mmdb"
 LIBMAXMIND_DIST_URL="https://github.com/maxmind/libmaxminddb/releases/download/1.1.1/$LIBMAXMIND_DIST_FILE"
 GEOIP_DIST_DIR="GeoIP-$GEOIP_VERSION"
 
+echo "Preparing directoryies: $CACHE_DIR/.geoip  $BUILD_DIR/$VENDORED_GEOIP"
 mkdir -p $CACHE_DIR/.geoip
+mkdir -p "$BUILD_DIR/$VENDORED_GEOIP"
+mkdir -p "$BUILD_DIR/$VENDORED_GEOIP/share/"
+
 cd $CACHE_DIR/.geoip
 
-LIBMAXMIND_DIST_HEADER=$APP_GEOIP/include/maxminddb.h
-
 echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
-mkdir -p "$BUILD_DIR/$VENDORED_GEOIP"
 
 cd $CACHE_DIR/.geoip
 # Download and build libmaxminddb
@@ -40,10 +41,8 @@ make check > /dev/null
 make install
 
 # Copy installed filed to build dir
-cp -R $CACHE_DIR/.geoip/libmaxminddb $BUILD_DIR/$VENDORED_GEOIP/
-find $BUILD_DIR/$VENDORED_GEOIP/
+cp -R $CACHE_DIR/.geoip/libmaxminddb $BUILD_DIR/$VENDORED_GEOIP
 
-mkdir -p $CACHE_DIR/.geoip
 cd $CACHE_DIR/.geoip
 
 if [ ! -f $GEOLITECITY_FILE ]; then
@@ -53,11 +52,15 @@ if [ ! -f $GEOLITECITY_FILE ]; then
     gunzip ${GEOLITECITY_FILE}.gz > /dev/null
 else
   echo "      $GEOLITECITY_FILE already cached"
-
 fi
-mkdir -p "$BUILD_DIR/$VENDORED_GEOIP/share/"
+
 cp $GEOLITECITY_FILE "$BUILD_DIR/$VENDORED_GEOIP/share/$GEOLITECITY_FILE"
+
+echo "After GEOLITECITY_FILE file copied, find:"
+find $BUILD_DIR/$VENDORED_GEOIP/
+
 GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
+
 
 # populate profile.d
 mkdir -p $BUILD_DIR/.bundle
