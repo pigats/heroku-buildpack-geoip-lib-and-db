@@ -65,6 +65,11 @@ echo "OLD .bundle/config"
 cat "$BUILD_DIR/.bundle/config"
 
 BUNDLE_CONFIG=$BUILD_DIR/.bundle/config
+CACHED_BUNDLE_CONFIG=$CACHE_DIR/.bundle/config
+if [ -f $CACHED_BUNDLE_CONFIG ]; then
+  rm $CACHED_BUNDLE_CONFIG
+fi
+
 if [ ! -f $BUNDLE_CONFIG ]; then
   echo "Creating $BUNDLE_CONFIG"
   echo "---" > $BUNDLE_CONFIG
