@@ -54,21 +54,6 @@ cp $GEOLITECITY_FILE "$BUILD_DIR/$VENDORED_GEOIP/share/$GEOLITECITY_FILE"
 GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 
 # populate profile.d
-PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
-mkdir -p $(dirname $PROFILE_PATH)
-# if [ ! grep GEOIP_DB_PATH $PROFILE_PATH ]; then
-echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
-echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\""
-echo "       export CPATH=\"$APP_GEOIP/include:\$CPATH\"" >> $PROFILE_PATH
-echo "       export CPPATH=\"$APP_GEOIP/include:\$CPPATH\"" >> $PROFILE_PATH
-echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
-echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
-# else
-# echo "Already in profile"
-# fi
-# cat $PROFILE_PATH
-
-
 mkdir -p $BUILD_DIR/.bundle
 
 BUNDLE_CONFIG=$BUILD_DIR/.bundle/config
@@ -82,3 +67,12 @@ else
 fi
 
 cat $BUNDLE_CONFIG
+
+PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
+echo "       export CPATH=\"$APP_GEOIP/include:\$CPATH\"" >> $PROFILE_PATH
+echo "       export CPPATH=\"$APP_GEOIP/include:\$CPPATH\"" >> $PROFILE_PATH
+echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
+
+echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
