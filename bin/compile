@@ -20,17 +20,19 @@ GEOIP_DIST_DIR="GeoIP-$GEOIP_VERSION"
 mkdir -p $CACHE_DIR/.geoip
 cd $CACHE_DIR/.geoip
 
-echo "-----> Installing Maxmind GeoIP C Library $GEOIP_VERSION"
+echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
 curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
 tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
-cd $GEOIP_DIST_DIR
+
+cd libmaxminddb-1.1.1
 ./configure --prefix="$APP_GEOIP" > /dev/null
 make > /dev/null
 make check
 make install > /dev/null
 ldconfig
-
 ls
+
+cd $CACHE_DIR/.geoip
 
 if [ ! -f $GEOLITECITY_FILE ]; then
     echo "     Downloading  $GEOLITECITY_FILE"
