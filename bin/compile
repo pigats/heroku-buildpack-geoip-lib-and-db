@@ -20,20 +20,19 @@ GEOIP_DIST_DIR="GeoIP-$GEOIP_VERSION"
 mkdir -p $CACHE_DIR/.geoip
 cd $CACHE_DIR/.geoip
 
+LIBMAXMIND_DIST_HEADER=$APP_GEOIP/include/maxminddb.h
+
 echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
-# if [ ! -f LIBMAXMIND_DIST_FILE ]; then
+if [ ! -f $LIBMAXMIND_DIST_HEADER ]; then
   curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
   tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
 
   cd libmaxminddb-1.1.1
   ./configure --prefix="$APP_GEOIP" > /dev/null
-  make
-  make check
+  make > /dev/null
+  make check > /dev/null
   make install
-  find $APP_GEOIP
-# fi
-echo "--- post build"
-# ls
+fi
 
 cd $CACHE_DIR/.geoip
 
@@ -54,6 +53,8 @@ GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
+echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\""
+echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
 cd $CACHE_DIR
 
