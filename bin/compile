@@ -27,10 +27,10 @@ echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
 
   cd libmaxminddb-1.1.1
   ./configure --prefix="$APP_GEOIP" > /dev/null
-  make > /dev/null
-  make check > /dev/null
-   make install
-   ldconfig
+  make
+  make check
+  make install
+  ldconfig
 # fi
 echo "--- post build"
 # ls
@@ -55,3 +55,4 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
+bundle config build.maxmind_geoip2 --with-opt-include=/app/vendor/geoip/1.6.6/include/maxminddb_config.h
