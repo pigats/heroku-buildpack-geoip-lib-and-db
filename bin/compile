@@ -27,19 +27,21 @@ cd $CACHE_DIR/.geoip
 LIBMAXMIND_DIST_HEADER=$APP_GEOIP/include/maxminddb.h
 
 echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
-# if [ ! -f $LIBMAXMIND_DIST_HEADER ]; then
-  curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
-  tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
+mkdir -p "$BUILD_DIR/$VENDORED_GEOIP"
 
-  cd libmaxminddb-1.1.1
-  ./configure --enable-shared --prefix="$APP_GEOIP" > /dev/null
-  make > /dev/null
-  make check > /dev/null
-  make install
-  # ldconfig
-  # cat /etc/ld.so.conf.d/local.conf
-# fi
+cd $CACHE_DIR/.geoip
+# Download and build libmaxminddb
+curl -s -L -o libmaxminddb-1.1.1.tar.gz $LIBMAXMIND_DIST_URL
+tar -zxvf libmaxminddb-1.1.1.tar.gz > /dev/null
+cd libmaxminddb-1.1.1
+./configure --prefix="$CACHE_DIR/.geoip/libmaxminddb" > /dev/null
+make > /dev/null
+make check > /dev/null
+make install
 
+# Copy installed filed to build dir
+cp -R $CACHE_DIR/.geoip/libmaxminddb $BUILD_DIR/$VENDORED_GEOIP/
+mkdir -p $CACHE_DIR/.geoip
 cd $CACHE_DIR/.geoip
 
 if [ ! -f $GEOLITECITY_FILE ]; then
