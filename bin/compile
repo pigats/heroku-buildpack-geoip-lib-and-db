@@ -66,15 +66,11 @@ GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 mkdir -p $BUILD_DIR/.bundle
 
 BUNDLE_CONFIG=$BUILD_DIR/.bundle/config
-
 if [ ! -f $BUNDLE_CONFIG ]; then
   echo "Creating $BUNDLE_CONFIG"
   echo "---" > $BUNDLE_CONFIG
-  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/libmaxminddb/include --with-opt-lib=$APP_GEOIP/libmaxminddb/lib\"" >> $BUNDLE_CONFIG
-else
-  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/libmaxminddb/include --with-opt-lib=$APP_GEOIP/libmaxminddb/lib\"" >> $BUNDLE_CONFIG
 fi
-
+echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/libmaxminddb/include --with-opt-lib=$APP_GEOIP/libmaxminddb/lib\"" >> $BUNDLE_CONFIG
 cat $BUNDLE_CONFIG
 
 PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
