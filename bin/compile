@@ -52,24 +52,34 @@ GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 # populate profile.d
 PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
-echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\""
-echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
-echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
-cd $CACHE_DIR
+if [ ! grep GEOIP_DB_PATH $PROFILE_PATH ]; then
+  echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
+  echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\""
+  echo "       export CPATH=\"$APP_GEOIP/include:\$CPATH\"" >> $PROFILE_PATH
+  echo "       export CPPATH=\"$APP_GEOIP/include:\$CPPATH\"" >> $PROFILE_PATH
+  echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
+  echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
+else
+  echo "Already in profile"
+fi
+cat $PROFILE_PATH
+
+# cd $CACHE_DIR
 
 mkdir -p $BUILD_DIR/.bundle
-echo $LDFLAGS
-echo $LDFLAGS
-echo $CFLAGS
+mkdir -p $BUILD_DIR/.bundle
 
 if [ ! -f $BUILD_DIR/.bundle/config ]
 then
   echo "---" > $BUILD_DIR/.bundle/config
 fi
 
-cat .bundle/config
-echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/include --with-opt-lib=$APP_GEOIP/lib\"" >> .bundle/config
-cat .bundle/config
+BUNDLE_CONFIG=".bundle/config"
+if [ ! grep BUNDLE_BUILD__MAXMIND_GEOIP2 $BUNDLE_CONFIG ]; then
+  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/include --with-opt-lib=$APP_GEOIP/lib\"" >> $BUILD_DIR/.bundle/config
+else
+  echo "Already in .bundle/config"
+fi
+cat $BUILD_DIR/.bundle/config
 
 # bundle config build.maxmind_geoip2 --with-opt-include=/app/vendor/geoip/1.6.6/include/maxminddb_config.h
