@@ -57,5 +57,7 @@ echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
 cd $CACHE_DIR
 cat .bundle/config
+echo "BUNDLE_BUILD__RUBY-MAXMIND_GEOIP2: --with-opt-include=/app/vendor/geoip/1.6.6/include" >> .bundle/config
+cat .bundle/config
 
 # bundle config build.maxmind_geoip2 --with-opt-include=/app/vendor/geoip/1.6.6/include/maxminddb_config.h
