@@ -36,8 +36,8 @@ echo "-----> Installing LibMaxmind GeoIP $GEOIP_VERSION"
   make > /dev/null
   make check > /dev/null
   make install
-  ldconfig
-  cat /etc/ld.so.conf.d/local.conf
+  # ldconfig
+  # cat /etc/ld.so.conf.d/local.conf
 # fi
 
 cd $CACHE_DIR/.geoip
@@ -73,8 +73,7 @@ cat $BUNDLE_CONFIG
 PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
-echo "       export CPATH=\"$APP_GEOIP/include:\$CPATH\"" >> $PROFILE_PATH
-echo "       export CPPATH=\"$APP_GEOIP/include:\$CPPATH\"" >> $PROFILE_PATH
+echo "       export MAXMIND_BINARY=\"$APP_GEOIP/bin/mmdblookup\"" >> $PROFILE_PATH
 echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
-
+cat $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
