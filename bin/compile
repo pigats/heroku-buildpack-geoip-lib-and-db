@@ -55,4 +55,7 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
-bundle config build.maxmind_geoip2 --with-opt-include=/app/vendor/geoip/1.6.6/include/maxminddb_config.h
+cd $CACHE_DIR
+cat .bundle/config
+
+# bundle config build.maxmind_geoip2 --with-opt-include=/app/vendor/geoip/1.6.6/include/maxminddb_config.h
