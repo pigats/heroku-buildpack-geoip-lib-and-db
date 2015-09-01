@@ -41,6 +41,8 @@ make install
 
 # Copy installed filed to build dir
 cp -R $CACHE_DIR/.geoip/libmaxminddb $BUILD_DIR/$VENDORED_GEOIP/
+find $BUILD_DIR/$VENDORED_GEOIP/
+
 mkdir -p $CACHE_DIR/.geoip
 cd $CACHE_DIR/.geoip
 
@@ -65,9 +67,9 @@ BUNDLE_CONFIG=$BUILD_DIR/.bundle/config
 if [ ! -f $BUNDLE_CONFIG ]; then
   echo "Creating $BUNDLE_CONFIG"
   echo "---" > $BUNDLE_CONFIG
-  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/include --with-opt-lib=$APP_GEOIP/lib\"" >> $BUNDLE_CONFIG
+  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/libmaxminddb/include --with-opt-lib=$APP_GEOIP/libmaxminddb/lib\"" >> $BUNDLE_CONFIG
 else
-  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/include --with-opt-lib=$APP_GEOIP/lib\"" >> $BUNDLE_CONFIG
+  echo "BUNDLE_BUILD__MAXMIND_GEOIP2: \"--with-opt-include=$APP_GEOIP/libmaxminddb/include --with-opt-lib=$APP_GEOIP/libmaxminddb/lib\"" >> $BUNDLE_CONFIG
 fi
 
 cat $BUNDLE_CONFIG
@@ -75,7 +77,7 @@ cat $BUNDLE_CONFIG
 PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
-echo "       export MAXMIND_BINARY=\"$APP_GEOIP/bin/mmdblookup\"" >> $PROFILE_PATH
-echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
+echo "       export MAXMIND_BINARY=\"$APP_GEOIP/libmaxminddbbin/mmdblookup\"" >> $PROFILE_PATH
+echo "       export LD_LIBRARY_PATH=\"$APP_GEOIP/libmaxminddb/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
 cat $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
