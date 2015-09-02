@@ -40,7 +40,7 @@ if [ ! -d $CACHE_DIR/.geoip/libmaxminddb ]; then
   ./configure --prefix="$CACHE_DIR/.geoip/libmaxminddb" > /dev/null
   make > /dev/null
   make check > /dev/null
-  make install
+  make install > /dev/null
 
 else
 
@@ -61,13 +61,10 @@ else
   echo "      $GEOLITECITY_FILE already cached"
 fi
 
-find $CACHE_DIR/.geoip
-
 cp $GEOLITECITY_FILE "$BUILD_DIR/$VENDORED_GEOIP/share/$GEOLITECITY_FILE"
 GEOIP_DB_PATH="$APP_GEOIP/share/$GEOLITECITY_FILE"
 
 LIBMAXMINDDB_PATH="$APP_GEOIP/libmaxminddb"
-BUNDLE_CONFIG=$BUILD_DIR/.bundle/config
 
 PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
