@@ -70,7 +70,7 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/geo.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "       export GEOIP_DB_PATH=\"$GEOIP_DB_PATH\"" >> $PROFILE_PATH
 echo "       export MAXMIND_BINARY=\"$LIBMAXMINDDB_PATH/bin/mmdblookup\"" >> $PROFILE_PATH
-echo "       export LD_LIBRARY_PATH=\"$LIBMAXMINDDB_PATH/lib:$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
+echo "       export LD_LIBRARY_PATH=\"$LIBMAXMINDDB_PATH/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_PATH
 
 cat $PROFILE_PATH
 echo "       GeoIP City Database is available via env in \$GEOIP_DB_PATH = $GEOIP_DB_PATH"
