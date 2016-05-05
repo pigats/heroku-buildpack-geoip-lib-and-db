@@ -1,4 +1,5 @@
 #!/bin/sh
 
 # always install
+echo "heroku-buildpack-geoip-lib-and-db"
 exit 0
